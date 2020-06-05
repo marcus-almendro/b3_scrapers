@@ -1,8 +1,8 @@
 beautifulsoup4==4.9.1
 bs4==0.0.1
-chromedriver-binary==83.0.4103.39.0
 html5lib==1.0.1
 lxml==4.5.1
+more-itertools==8.3.0
 numpy==1.18.4
 pandas==1.0.4
 python-dateutil==2.8.1

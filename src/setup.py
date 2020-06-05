@@ -9,5 +9,5 @@ setup(
     author='Marcus Almendro',
     author_email='marcus.almendro@gmail.com',
     packages=find_packages(),
-    install_requires=['beautifulsoup4', 'pandas', 'lxml', 'html5lib', 'chromedriver-binary==83.0.4103.39.0', 'selenium', 'tqdm'],
+    install_requires=['beautifulsoup4', 'pandas', 'lxml', 'html5lib', 'more-itertools', 'selenium', 'tqdm'],
 )

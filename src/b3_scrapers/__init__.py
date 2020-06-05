@@ -8,29 +8,40 @@ from .eventos_fii import busca_eventos_fii
 from .negociacao import busca_trades
 
 from tqdm import tqdm
+from concurrent import futures
 
 
 def busca_dados_acoes():
-    acoes = []
     codigos = busca_codigos_cvm()
-    for codigo in tqdm(codigos, desc='Buscando informações dos papéis'):
-        cod_negs = busca_codigos_negociacao(codigo)
-        acoes.append({
-            'codigo_cvm': codigo,
-            'symbols': cod_negs['symbols'],
-            'isin': cod_negs['isin'],
-            'eventos': busca_eventos_acoes(codigo)
-        })
-    return acoes
+    with futures.ThreadPoolExecutor(max_workers=8) as executor:
+        return list(tqdm(executor.map(_busca_dados_codigo_cvm, codigos),
+                         total=len(codigos),
+                         desc='Buscando códigos negociação'))
 
 
 def busca_dados_fii():
-    fiis = []
-    codigos = busca_codigos_fii()
-    for codigo in tqdm(codigos, desc='Buscando informações dos FIIs'):
-        fiis.append({
-            'codigo_cvm': codigo,
-            'symbols': [codigo + '11'],
-            'eventos': busca_eventos_fii(codigo)
-        })
-    return fiis
+    fiis = busca_codigos_fii()
+    with futures.ThreadPoolExecutor(max_workers=8) as executor:
+        return list(tqdm(executor.map(_busca_dados_codigo_fii, fiis),
+                         total=len(fiis),
+                         desc='Buscando informações dos FIIs'))
+
+
+def _busca_dados_codigo_cvm(codigo):
+    cod_negs = busca_codigos_negociacao(codigo['codigo_cvm'])
+    return {
+        'codigo_cvm': codigo['codigo_cvm'],
+        'nome': codigo['nome'],
+        'symbols': cod_negs['symbols'],
+        'isin': cod_negs['isin'],
+        'eventos': busca_eventos_acoes(codigo['codigo_cvm'])
+    }
+
+
+def _busca_dados_codigo_fii(fii):
+    return {
+        'sigla': fii['sigla'],
+        'nome': fii['nome'],
+        'symbols': [fii['sigla'] + '11'],
+        'eventos': busca_eventos_fii(fii['sigla'])
+    }

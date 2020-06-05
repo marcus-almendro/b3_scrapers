@@ -5,7 +5,6 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import chromedriver_binary
 
 BASE_URL = 'https://cei.b3.com.br/'
 chrome_options = ChromeOptions()

@@ -7,14 +7,16 @@ url = 'http://bvmf.bmfbovespa.com.br/Fundos-Listados/FundosListados.aspx?tipoFun
 
 def busca_codigos_fii():
     with urlopen(url) as html:
-        soup = BeautifulSoup(html, 'html.parser')
+        content = html.read().decode('utf-8')
+        soup = BeautifulSoup(content, 'html.parser')
 
     table = soup.find('table')
     try:
         df = pd.read_html(str(table))[0]
-        df.drop(columns=['Razão Social',
-                         'Fundo',
+        df.drop(columns=['Fundo',
                          'Segmento'], inplace=True)
+        df = df.rename(columns={'Razão Social': 'nome',
+                                'Código': 'sigla'})
     except ValueError:
         return []
-    return df.values.flatten().tolist()
+    return df.to_dict('records')
