@@ -100,7 +100,7 @@ def _ler_tabela(corretora):
                             'Data do Negócio': 'data',
                             'Preço (R$)': 'preco'})
 
-    df['data'] = (pd.to_datetime(df['data'], dayfirst=True) - pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
+    df['data'] = pd.to_datetime(df['data'], dayfirst=True, errors='coerce')
     df['operacao'] = df.apply(lambda row: 'venda' if row.operacao == 'V' else 'compra', axis=1)
 
     df.drop(columns=['Mercado',

@@ -25,7 +25,7 @@ def _eventos_em_ativos(html):
                             'Negócios com até': 'data_com',
                             'Ativo Emitido': 'isin_destino',
                             '% / Fator de Grupamento': 'valor'})
-    df['data_com'] = pd.to_datetime(df['data_com'], dayfirst=True)
+    df['data_com'] = pd.to_datetime(df['data_com'], dayfirst=True, errors='coerce')
     return df.to_dict('records')
 
 
