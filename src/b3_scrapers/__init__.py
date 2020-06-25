@@ -7,6 +7,8 @@ from .eventos_fii import busca_eventos_fii
 
 from .negociacao import busca_trades
 
+from .proventos_fii import busca_proventos_no_range
+
 from tqdm import tqdm
 from concurrent import futures
 
