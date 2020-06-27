@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='b3_scrapers',
-    version='0.3',
+    version='0.4',
     description='Scrapers da B3',
     url='https://github.com/marcus-almendro/b3_scrapers',
     author='Marcus Almendro',
