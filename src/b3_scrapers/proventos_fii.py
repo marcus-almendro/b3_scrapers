@@ -23,7 +23,7 @@ def busca_proventos_no_range(inicio, fim):
 
 
 def _parse_provento(i, html):
-    if not html.find('Informações sobre Pagamento de Proventos'):
+    if html.find('sobre Pagamento de Proventos') < 0:
         return None
 
     soup = BeautifulSoup(html, 'html.parser')
@@ -56,7 +56,6 @@ def _parse_provento(i, html):
         return None
     except KeyError:
         return None
-
 
 
 
