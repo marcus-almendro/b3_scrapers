@@ -52,10 +52,5 @@ def _parse_provento(i, html):
             'valor': valores['valor'],
             'amortizacao': valores['amort']
         }
-    except ValueError:
+    except Exception:
         return None
-    except KeyError:
-        return None
-
-
-
