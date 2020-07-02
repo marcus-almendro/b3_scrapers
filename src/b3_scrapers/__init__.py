@@ -15,7 +15,7 @@ from concurrent import futures
 
 def busca_dados_acoes():
     codigos = busca_codigos_cvm()
-    with futures.ThreadPoolExecutor(max_workers=8) as executor:
+    with futures.ThreadPoolExecutor(max_workers=2) as executor:
         return list(tqdm(executor.map(_busca_dados_codigo_cvm, codigos),
                          total=len(codigos),
                          desc='Buscando códigos negociação'))
@@ -23,7 +23,7 @@ def busca_dados_acoes():
 
 def busca_dados_fii():
     fiis = busca_codigos_fii()
-    with futures.ThreadPoolExecutor(max_workers=8) as executor:
+    with futures.ThreadPoolExecutor(max_workers=2) as executor:
         return list(tqdm(executor.map(_busca_dados_codigo_fii, fiis),
                          total=len(fiis),
                          desc='Buscando informações dos FIIs'))
